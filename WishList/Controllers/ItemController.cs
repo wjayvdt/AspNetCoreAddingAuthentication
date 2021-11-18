@@ -21,7 +21,7 @@ namespace WishList.Controllers
 
         public IActionResult Index()
         {
-            var model = _context.Items.Where(i => i.User.Equals(_userManager.GetUserAsync(HttpContext.User))).ToList();
+            var model = _context.Items.Where(i => i.User.Equals(_userManager.GetUserAsync(HttpContext.User).Result)).ToList();
 
             return View("Index", model);
         }
@@ -44,7 +44,7 @@ namespace WishList.Controllers
         public IActionResult Delete(int id)
         {
             var item = _context.Items.FirstOrDefault(e => e.Id == id);
-            if (!item.User.Equals(_userManager.GetUserAsync(HttpContext.User)))
+            if (!item.User.Equals(_userManager.GetUserAsync(HttpContext.User).Result))
             {
                 return Unauthorized();
             }
